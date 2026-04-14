@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
-  <title>NOVA MD • WhatsApp Linker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NOVA MD - WhatsApp Linker</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   <style>
     :root {
@@ -27,7 +27,7 @@
     }
 
     body {
-      font-family: 'Poppins', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'Poppins', 'Inter', sans-serif;
       background: #000000;
       min-height: 100vh;
       display: flex;
@@ -64,7 +64,7 @@
       }
     }
 
-    /* Neon lines overlay */
+    /* Neon lines */
     body::after {
       content: '';
       position: fixed;
@@ -82,7 +82,7 @@
       z-index: 0;
     }
 
-    /* Main container */
+    /* Page Container */
     .page {
       width: 100%;
       max-width: 500px;
@@ -220,7 +220,7 @@
       font-size: 14px;
     }
 
-    /* Pair Page / QR Page shared */
+    /* Pair Page */
     .header {
       text-align: center;
       margin-bottom: 30px;
@@ -256,7 +256,6 @@
       margin-bottom: 20px;
     }
 
-    /* socials replaced with mine */
     .social-icons {
       display: flex;
       justify-content: center;
@@ -276,17 +275,14 @@
       text-decoration: none;
       transition: all 0.3s ease;
       border: 1px solid rgba(0, 255, 157, 0.3);
-      background: #1a1a1a;
     }
 
-    .social-icons a i {
-      transition: transform 0.2s;
-    }
+    .social-icons a.whatsapp { background: #25D366; }
+    .social-icons a.github { background: #333; }
 
     .social-icons a:hover {
       transform: translateY(-3px);
       box-shadow: 0 0 15px rgba(0, 255, 157, 0.6);
-      border-color: #00ff9d;
     }
 
     .input-group {
@@ -401,7 +397,7 @@
       color: #00ff9d;
     }
 
-    /* QR Display */
+    /* QR Page */
     .qr-display {
       background: rgba(10, 10, 10, 0.8);
       padding: 25px;
@@ -450,25 +446,15 @@
       color: #444;
     }
 
-    .loading-spinner {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      border: 2px solid rgba(0, 255, 157, 0.3);
-      border-top-color: #00ff9d;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin-right: 8px;
-      vertical-align: middle;
-    }
-
     @media (max-width: 480px) {
       .page {
         padding: 25px 20px;
       }
+
       .code-display {
         font-size: 18px;
       }
+
       .qr-image {
         max-width: 200px;
       }
@@ -476,292 +462,232 @@
   </style>
 </head>
 <body>
-
-  <!-- Page 1: Loading Screen (NOVA MD) -->
+  <!-- Page 1: Loading -->
   <div id="loadingPage" class="page loading-page">
     <div class="nova-logo">
-      <i class="fas fa-microchip"></i>
+      <i class="fas fa-bolt"></i>
     </div>
     <div class="loading-circle"></div>
-    <div class="loading-text">NOVA MD · INITIALIZING</div>
+    <div class="loading-text">INITIALIZING NOVA MD...</div>
   </div>
 
-  <!-- Page 2: Selection (Pair Code / QR) -->
+  <!-- Page 2: Selection (Pair up / QR down) -->
   <div id="selectionPage" class="page hidden">
-    <div class="selection-title">CONNECTION PROTOCOL</div>
+    <div class="selection-title">CHOOSE CONNECTION METHOD</div>
     <div class="selection-options">
       <div class="selection-card" id="selectPair">
         <i class="fas fa-key"></i>
         <h3>PAIR CODE</h3>
-        <p>Generate 8-digit code to link your device</p>
+        <p>Generate a 8-digit code to link your device</p>
       </div>
       <div class="selection-card" id="selectQR">
         <i class="fas fa-qrcode"></i>
         <h3>QR CODE</h3>
-        <p>Scan QR with WhatsApp to connect instantly</p>
+        <p>Scan QR code with WhatsApp to connect</p>
       </div>
     </div>
   </div>
 
-  <!-- Page 3: Pair Mode Interface -->
+  <!-- Page 3: Pair Mode -->
   <div id="pairPage" class="page hidden">
     <div class="header">
       <div class="logo"><i class="fas fa-bolt"></i></div>
       <h1 class="title">NOVA MD</h1>
-      <p class="subtitle">Pair Code · link your device</p>
-      <!-- REPLACED SOCIALS: my own links -->
+      <p class="subtitle">Connect your device via Pair Code</p>
       <div class="social-icons">
-        <a href="https://github.com/AmonTech1/NOVA-MD" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        <a href="https://whatsapp.com/channel/0029VbBaJvI7IUYbtCeaPh0I" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://whatsapp.com/channel/0029VbBaJvI7IUYbtCeaPh0I" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://github.com/AmonTech1/NOVA-MD" target="_blank" class="github"><i class="fab fa-github"></i></a>
       </div>
     </div>
 
     <div class="input-group">
-      <label class="input-label"><i class="fas fa-phone-alt"></i> WhatsApp Number (with country code)</label>
-      <input type="text" id="mobileNumber" class="input-field" placeholder="+12345678901" autocomplete="off">
+      <label class="input-label"><i class="fas fa-phone-alt"></i> WhatsApp Number</label>
+      <input type="text" id="mobileNumber" class="input-field" placeholder="254759006509">
     </div>
 
-    <button class="generate-btn" id="submitPairBtn">
+    <button class="generate-btn" id="submitPair">
       <i class="fas fa-key"></i> Generate Pair Code
     </button>
 
-    <div id="pairLoader" style="display: none; text-align: center; margin: 12px 0;">
-      <div class="loading-spinner"></div> <span style="color:#00ff9d;">requesting secure code...</span>
+    <div class="loading" id="pairLoading" style="display: none; text-align: center; margin: 15px 0;">
+      <i class="fas fa-spinner" style="font-size: 28px; color: #00ff9d; animation: spin 1s linear infinite;"></i>
     </div>
 
     <div class="code-display" id="codeDisplay">
-      <i class="fas fa-key" style="margin-right: 8px;"></i> code will appear
+      <i class="fas fa-key" style="margin-right: 8px;"></i> Your code appears here
     </div>
 
     <button class="copy-btn" id="copyPairBtn">
       <i class="fas fa-copy"></i> Copy Code
     </button>
 
-    <button class="back-btn" id="backFromPairBtn">
-      <i class="fas fa-arrow-left"></i> Back to selection
+    <button class="back-btn" id="backFromPair">
+      <i class="fas fa-arrow-left"></i> Back to Selection
     </button>
 
     <div class="footer">
-      <p>© 2026 NOVA MD · encrypted linking</p>
+      <p>© 2026 NOVA MD • All rights reserved</p>
     </div>
   </div>
 
-  <!-- Page 4: QR Mode Interface -->
+  <!-- Page 4: QR Mode -->
   <div id="qrPage" class="page hidden">
     <div class="header">
-      <div class="logo"><i class="fas fa-qrcode"></i></div>
+      <div class="logo"><i class="fas fa-bolt"></i></div>
       <h1 class="title">NOVA MD</h1>
-      <p class="subtitle">QR Code · instant sync</p>
+      <p class="subtitle">Connect your device via QR Code</p>
       <div class="social-icons">
-        <a href="https://github.com/novamd" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="https://twitter.com/novamd" target="_blank"><i class="fab fa-twitter"></i></a>
-        <a href="https://novamd.dev" target="_blank"><i class="fas fa-globe"></i></a>
+        <a href="https://whatsapp.com/channel/0029VbBaJvI7IUYbtCeaPh0I" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://github.com/AmonTech1/NOVA-MD" target="_blank" class="github"><i class="fab fa-github"></i></a>
       </div>
     </div>
 
-    <div id="qrLoader" style="display: none; text-align: center; margin: 12px 0;">
-      <div class="loading-spinner"></div> <span style="color:#00ff9d;">generating QR...</span>
+    <div class="loading" id="qrLoading" style="display: none; text-align: center; margin: 15px 0;">
+      <i class="fas fa-spinner" style="font-size: 28px; color: #00ff9d; animation: spin 1s linear infinite;"></i>
     </div>
 
-    <div class="qr-display" id="qrDisplayContainer">
-      <img id="qrImage" class="qr-image" src="" alt="QR Code" style="display: none;">
+    <div class="qr-display" id="qrDisplay">
+      <img id="qrImage" class="qr-image" src="" alt="QR Code">
       <div class="qr-instructions" id="qrInstructions">
-        Ready to scan
+        Generating QR Code...
       </div>
     </div>
 
-    <button class="back-btn" id="backFromQRBtn">
-      <i class="fas fa-arrow-left"></i> Back to selection
+    <button class="back-btn" id="backFromQR">
+      <i class="fas fa-arrow-left"></i> Back to Selection
     </button>
 
     <div class="footer">
-      <p>© 2026 NOVA MD · realtime QR bridge</p>
+      <p>© 2026 NOVA MD • All rights reserved</p>
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
   <script>
-    // ---------- NO AUDIO. FULLY REMOVED. Only UI & original pairing/qr logic ----------
-    // Page elements
+    // Page navigation
     const loadingPage = document.getElementById('loadingPage');
     const selectionPage = document.getElementById('selectionPage');
     const pairPage = document.getElementById('pairPage');
     const qrPage = document.getElementById('qrPage');
 
-    // Pair elements
-    const mobileInput = document.getElementById('mobileNumber');
-    const submitPairBtn = document.getElementById('submitPairBtn');
-    const pairLoader = document.getElementById('pairLoader');
-    const codeDisplayDiv = document.getElementById('codeDisplay');
-    const copyPairBtn = document.getElementById('copyPairBtn');
-
-    // QR elements
-    const qrLoader = document.getElementById('qrLoader');
-    const qrImage = document.getElementById('qrImage');
-    const qrInstructionsSpan = document.getElementById('qrInstructions');
-
-    // Back & selection buttons
-    const selectPairCard = document.getElementById('selectPair');
-    const selectQRCard = document.getElementById('selectQR');
-    const backFromPair = document.getElementById('backFromPairBtn');
-    const backFromQR = document.getElementById('backFromQRBtn');
-
-    // --- Loading transition (3 sec) then show selection page ---
+    // Show loading for 3 seconds then show selection
     setTimeout(() => {
       loadingPage.classList.add('hidden');
       selectionPage.classList.remove('hidden');
-    }, 2800);
+    }, 3000);
 
-    // --- SELECTION HANDLERS (Pair / QR) ---
-    selectPairCard.addEventListener('click', () => {
+    // Selection handlers
+    document.getElementById('selectPair').addEventListener('click', () => {
       selectionPage.classList.add('hidden');
       pairPage.classList.remove('hidden');
-      // reset pair UI
-      mobileInput.value = '';
-      codeDisplayDiv.innerHTML = '<i class="fas fa-key" style="margin-right: 8px;"></i> code will appear';
-      pairLoader.style.display = 'none';
     });
 
-    selectQRCard.addEventListener('click', () => {
+    document.getElementById('selectQR').addEventListener('click', () => {
       selectionPage.classList.add('hidden');
       qrPage.classList.remove('hidden');
-      // generate QR automatically when entering QR page (original logic preserved)
       generateQRCode();
     });
 
-    // --- Back to selection ---
-    backFromPair.addEventListener('click', () => {
+    // Back buttons
+    document.getElementById('backFromPair').addEventListener('click', () => {
       pairPage.classList.add('hidden');
       selectionPage.classList.remove('hidden');
-      // reset loading states
-      pairLoader.style.display = 'none';
-      codeDisplayDiv.innerHTML = '<i class="fas fa-key" style="margin-right: 8px;"></i> code will appear';
-      mobileInput.value = '';
+      document.getElementById('codeDisplay').innerHTML = '<i class="fas fa-key" style="margin-right: 8px;"></i> Your code appears here';
+      document.getElementById('mobileNumber').value = '';
     });
 
-    backFromQR.addEventListener('click', () => {
+    document.getElementById('backFromQR').addEventListener('click', () => {
       qrPage.classList.add('hidden');
       selectionPage.classList.remove('hidden');
-      // reset QR visuals
-      qrImage.style.display = 'none';
-      qrInstructionsSpan.innerHTML = 'Ready to scan';
-      qrLoader.style.display = 'none';
+      document.getElementById('qrImage').src = '';
     });
 
-    // --- PAIR CODE GENERATION (identical logic, no audio) ---
-    async function generatePairCode() {
-      let rawNumber = mobileInput.value.trim();
-      if (!rawNumber) {
-        codeDisplayDiv.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Please enter your WhatsApp number</div>';
-        return;
-      }
-      // Extract digits only (preserve original logic)
-      const digitsOnly = rawNumber.replace(/[^0-9]/g, '');
-      if (digitsOnly.length < 9) {
-        codeDisplayDiv.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Enter a valid number (country code + number)</div>';
+    // Pair code generation
+    document.getElementById("submitPair").addEventListener("click", async (e) => {
+      e.preventDefault();
+      
+      const mobileNumberInput = document.getElementById("mobileNumber");
+      const codeDisplay = document.getElementById("codeDisplay");
+      const pairLoading = document.getElementById("pairLoading");
+
+      let mobileNumber = mobileNumberInput.value.trim();
+      if (!mobileNumber) {
+        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Please enter your WhatsApp number</div>';
         return;
       }
 
-      pairLoader.style.display = 'block';
-      codeDisplayDiv.innerHTML = '';
+      mobileNumber = mobileNumber.replace(/[^0-9]/g, "");
+      
+      if (mobileNumber.length < 10) {
+        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Enter a valid phone number</div>';
+        return;
+      }
+
+      pairLoading.style.display = "block";
+      codeDisplay.innerHTML = '';
 
       try {
-        // endpoint /pair?number=xxxx  (original unchanged)
-        const response = await axios(`/pair?number=${digitsOnly}`);
-        const returnedCode = response.data.code || "Service Unavailable";
-        if (returnedCode === "Service Unavailable") {
-          codeDisplayDiv.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Service Unavailable. Try again later.</div>';
+        const response = await axios(`/pair?number=${mobileNumber}`);
+        
+        const code = response.data.code || "Service Unavailable";
+        if (code === "Service Unavailable") {
+          codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Service Unavailable</div>';
         } else {
-          codeDisplayDiv.innerHTML = `<div class="success-message"><i class="fas fa-check-circle"></i> ${returnedCode}</div>`;
+          codeDisplay.innerHTML = `<div class="success-message"><i class="fas fa-check-circle"></i> ${code}</div>`;
         }
-      } catch (err) {
-        console.error("Pair code error:", err);
-        codeDisplayDiv.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Network error. Could not generate code.</div>';
+      } catch (error) {
+        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error generating code</div>';
       } finally {
-        pairLoader.style.display = 'none';
+        pairLoading.style.display = "none";
       }
-    }
-
-    submitPairBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      generatePairCode();
     });
 
-    // --- Copy logic for Pair Code (matches original behavior)---
-    copyPairBtn.addEventListener('click', () => {
-      const displayText = codeDisplayDiv.innerText;
-      // Extract the actual code if present
-      let codeToCopy = '';
-      if (displayText.includes('CODE:')) {
-        const parts = displayText.split('CODE:');
-        if (parts[1]) codeToCopy = parts[1].trim();
-      } else if (displayText.match(/\d{6,8}/)) {
-        const match = displayText.match(/\d{6,8}/);
-        codeToCopy = match[0];
-      } else if (displayText.includes('success-message')) {
-        // fallback: remove any icons text
-        const cleaned = displayText.replace(/[✓✔✅]/g, '').replace(/CODE:/i, '').trim();
-        if (cleaned.match(/\d+/)) codeToCopy = cleaned.match(/\d+/)[0];
-        else codeToCopy = cleaned;
-      } else {
-        codeToCopy = displayText;
-      }
-
-      if (!codeToCopy || codeToCopy.toLowerCase().includes('error') || codeToCopy === 'code will appear') {
-        const originalHtml = copyPairBtn.innerHTML;
-        copyPairBtn.innerHTML = '<i class="fas fa-ban"></i> No code';
-        setTimeout(() => { copyPairBtn.innerHTML = originalHtml; }, 1500);
-        return;
-      }
-
-      navigator.clipboard.writeText(codeToCopy).then(() => {
-        const original = copyPairBtn.innerHTML;
-        copyPairBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-        setTimeout(() => {
-          copyPairBtn.innerHTML = original;
-        }, 2000);
-      }).catch(() => {});
-    });
-
-    // --- QR CODE GENERATION (original unchanged, no audio)---
+    // QR code generation
     async function generateQRCode() {
-      qrLoader.style.display = 'block';
-      qrImage.style.display = 'none';
-      qrInstructionsSpan.innerHTML = 'Requesting secure QR data...';
+      const qrLoading = document.getElementById("qrLoading");
+      const qrDisplay = document.getElementById("qrDisplay");
+      const qrImage = document.getElementById("qrImage");
+      const qrInstructions = document.getElementById("qrInstructions");
+
+      qrLoading.style.display = "block";
+      qrImage.style.display = "none";
+      qrInstructions.innerHTML = "Generating QR Code...";
 
       try {
         const response = await axios('/qr');
-        if (response.data && response.data.qr) {
+        
+        if (response.data.qr) {
           qrImage.src = response.data.qr;
-          if (response.data.instructions && Array.isArray(response.data.instructions)) {
-            qrInstructionsSpan.innerHTML = response.data.instructions.join('<br>');
-          } else {
-            qrInstructionsSpan.innerHTML = 'Scan this QR code with your WhatsApp app →';
-          }
-          qrImage.style.display = 'block';
+          qrInstructions.innerHTML = response.data.instructions.join('<br>');
+          qrImage.style.display = "block";
         } else {
-          qrInstructionsSpan.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Invalid QR response from server</div>';
-          qrImage.style.display = 'none';
+          qrInstructions.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Failed to generate QR code</div>';
         }
-      } catch (err) {
-        console.error("QR generation error:", err);
-        qrInstructionsSpan.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Failed to load QR. Check connection.</div>';
-        qrImage.style.display = 'none';
+      } catch (error) {
+        qrInstructions.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error generating QR code</div>';
       } finally {
-        qrLoader.style.display = 'none';
+        qrLoading.style.display = "none";
       }
     }
 
-    // refresh QR if needed (if user re-enters QR page) – already called on selection.
-    // Also, if user clicks on QR page again we keep same QR generation, it's fine.
-    // Additional: no audio anywhere, all music removed, no badge, no audio variables.
-    
-    // small UX: ensure that if QR mode fails, we can retry? not needed but consistent.
-    // Also, there is no audio or music elements. all traces removed.
-
-    // ensure any possible stray audio? absolutely none.
-    // also mobile UX: remove forced global click event for music etc.
-    // completely silent, only NOVA MD linking logic.
+    // Copy code function
+    document.getElementById("copyPairBtn").addEventListener("click", () => {
+      const codeDisplay = document.getElementById("codeDisplay").innerText;
+      let code = codeDisplay;
+      if (code.includes('CODE:')) {
+        code = code.replace('CODE:', '').trim();
+      }
+      if (!code.includes('error') && !code.includes('Error')) {
+        navigator.clipboard.writeText(code).then(() => {
+          const copyBtn = document.getElementById("copyPairBtn");
+          const originalText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+          setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+          }, 2000);
+        });
+      }
+    });
   </script>
 </body>
 </html>
